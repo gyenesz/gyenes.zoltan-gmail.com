@@ -1,12 +1,12 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "description" : "Marathon Terra SMS küldési igényeket kezelő interfész Az OKF által hívott mobil szolgáltató oldali interfész",
+    "description" : "Marathon Terra SMS küldési igényeket kezelő interfész. Az OKF által hívott mobil szolgáltató oldali interfész",
     "version" : "1.0.0",
     "title" : "Marathon Terra Management API",
     "contact" : {
-      "name" : "Telco",
-      "email" : "intdev@telco.hu"
+      "name" : "Magyar Telekom",
+      "email" : "integration@telekom.hu"
     },
     "license" : {
       "name" : "Proprietary license"
@@ -25,6 +25,7 @@
   "paths" : {
     "/igeny" : {
       "post" : {
+        "tags" : [ "Igény küldés" ],
         "summary" : "SMS igény küldése",
         "operationId" : "igenyKuldes",
         "parameters" : [ {
@@ -97,7 +98,7 @@
     },
     "/stop" : {
       "post" : {
-        "tags" : [ "Igény" ],
+        "tags" : [ "Igény leállítás" ],
         "summary" : "SMS küldés leállítása",
         "operationId" : "igenyKuldesStop",
         "parameters" : [ {
