@@ -1,0 +1,276 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Marathon Terra SMS küldési igényeket kezelő interfész Az OKF által hívott mobil szolgáltató oldali interfész",
+    "version" : "1.0.0",
+    "title" : "Marathon Terra Management API",
+    "contact" : {
+      "name" : "Telco",
+      "email" : "intdev@telco.hu"
+    },
+    "license" : {
+      "name" : "Proprietary license"
+    }
+  },
+  "tags" : [ {
+    "name" : "Marathon Terra",
+    "description" : "Marathon Terra Management API"
+  } ],
+  "schemes" : [ "https" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "security" : [ {
+    "basicAuth" : [ ]
+  } ],
+  "paths" : {
+    "/igeny" : {
+      "post" : {
+        "summary" : "SMS igény küldése",
+        "operationId" : "igenyKuldes",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "http hívás tartalma",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/igeny_tomb_tipus"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "400" : {
+            "description" : "Bad format request",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "401" : {
+            "description" : "Not authenticated",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "403" : {
+            "description" : "Not authorized",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "404" : {
+            "description" : "Not found",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "408" : {
+            "description" : "Request timeout",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "422" : {
+            "description" : "Business input parameter validation error",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "429" : {
+            "description" : "Too many requests",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "500" : {
+            "description" : "Server error",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/stop" : {
+      "post" : {
+        "tags" : [ "Igény" ],
+        "summary" : "SMS küldés leállítása",
+        "operationId" : "igenyKuldesStop",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/igeny_tomb_tipus"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "400" : {
+            "description" : "Bad format request",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "401" : {
+            "description" : "Not authenticated",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "403" : {
+            "description" : "Not authorized",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "404" : {
+            "description" : "Not found",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "408" : {
+            "description" : "Request timeout",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "422" : {
+            "description" : "Business input parameter validation error",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "429" : {
+            "description" : "Too many requests",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          },
+          "500" : {
+            "description" : "Server error",
+            "schema" : {
+              "$ref" : "#/definitions/igeny_valasz_tipus"
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "basicAuth" : {
+      "description" : "Http basic auth + client certificate",
+      "type" : "basic"
+    }
+  },
+  "definitions" : {
+    "igeny_tomb_tipus" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/igeny_tipus"
+      },
+      "minItems" : 1,
+      "maxItems" : 5
+    },
+    "igeny_tipus" : {
+      "type" : "object",
+      "required" : [ "SMS_Igeny_ID", "SMS_Igeny_Tipus" ],
+      "properties" : {
+        "SMS_Igeny_ID" : {
+          "type" : "string",
+          "description" : "Igény azonosító"
+        },
+        "SMS_Igeny_Tipus" : {
+          "type" : "string",
+          "enum" : [ "1", "2" ],
+          "description" : "Igény típus lehetséges értékei:\n * `1` - igény\n * `2` - stop igény\n"
+        },
+        "SMS_Igeny_Szint" : {
+          "type" : "string",
+          "enum" : [ "1", "2" ],
+          "description" : "Igény szint lehetséges értékei:\n * `1` - országos\n * `2` - területi\n"
+        },
+        "SMS_Igeny_Kozles_Ideje" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Igény közlés ideje"
+        },
+        "SMS_Igeny_Ervenyessegi_Ido" : {
+          "type" : "string",
+          "description" : "Percben kifejezett intervallum, melyen belül szabad csak üzeneteket kiküldeni a felhasználók részére. Az üzenet kiküldés alap érvényességi ideje 3,5 óra."
+        },
+        "SMS_Igeny_SMS_Szovege" : {
+          "type" : "string",
+          "description" : "SMS szövege. 160 karakter (140 byte UTF-8 karakter kódolással)"
+        },
+        "SMS_Igeny_SMS_Szovege_Roaming" : {
+          "type" : "string",
+          "description" : "Roamingoló hálózathasználók számára kiküldendő (javasoltan angol nyelvű) üzenet szövege. 160 karakter (140 byte UTF-8 karakter kódolással)"
+        },
+        "SMS_Igeny_Terulet" : {
+          "$ref" : "#/definitions/terulet_tipus"
+        }
+      },
+      "title" : "igeny típus",
+      "description" : "Igény adattípus"
+    },
+    "koordinata_paros_tipus" : {
+      "type" : "array",
+      "items" : {
+        "type" : "number"
+      },
+      "minItems" : 2,
+      "maxItems" : 2
+    },
+    "terulet_tipus" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "Polygon"
+        },
+        "coordinates" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/koordinata_paros_tipus"
+          },
+          "description" : "Poligon koordináták",
+          "minItems" : 3,
+          "maxItems" : 100
+        }
+      },
+      "title" : "terület típus",
+      "description" : "SMS értesítési terület (Geojson polygon formában)"
+    },
+    "igeny_valasz_tipus" : {
+      "type" : "object",
+      "required" : [ "eredmeny", "hibakod" ],
+      "properties" : {
+        "eredmeny" : {
+          "type" : "string",
+          "description" : "Az igény technikai befogadásának eredménye"
+        },
+        "hibakod" : {
+          "type" : "string",
+          "description" : "Státusz kód"
+        }
+      },
+      "title" : "Igény válasz típus",
+      "description" : "Igény válasz felépítése"
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/TelekomProfile/marathonTerra/1.0.0"
+}
